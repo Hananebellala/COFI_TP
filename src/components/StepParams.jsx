@@ -6,7 +6,8 @@ import { DA } from '../utils/math';
 export const StepParams = ({ params, setParams, onNext }) => {
   const set = (k, v) => setParams(p => ({ ...p, [k]: v }));
   const totalFinancement = params.apportCapital + params.autoFinancement + params.montantEmprunt;
-  const ok = Math.abs(totalFinancement - params.montantInvest) < 1;
+  const totalBesoins = params.montantInvest + (params.bfrInitial || 0);
+  const ok = Math.abs(totalFinancement - totalBesoins) < 1;
 
   return (
     <div style={{ maxWidth: 900, margin: '0 auto', padding: '3rem 1.5rem' }} className="fade-up delay-100">
@@ -49,7 +50,9 @@ export const StepParams = ({ params, setParams, onNext }) => {
           <Field label="Autofinancement" value={params.autoFinancement} onChange={v => set('autoFinancement', v)} suffix="DA" min={0} />
           <Field label="Emprunt bancaire" value={params.montantEmprunt} onChange={v => set('montantEmprunt', v)} suffix="DA" min={0} />
           <div style={{ background: ok ? c.greenLight : c.redLight, border: `1px solid ${ok ? c.green : c.red}`, borderRadius: 10, padding: '0.75rem 1rem', fontSize: '0.85rem', color: ok ? c.green : c.red, marginTop: '1rem', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            {ok ? `Total = ${DA(totalFinancement)} DA — équilibré` : `Total = ${DA(totalFinancement)} DA ≠ ${DA(params.montantInvest)} DA — déséquilibré`}
+            {ok 
+              ? `Total = ${DA(totalFinancement)} DA — équilibré` 
+              : `Total = ${DA(totalFinancement)} DA ≠ Besoins ${DA(totalBesoins)} DA (Invest: ${DA(params.montantInvest)} + BFR: ${DA(params.bfrInitial || 0)}) — déséquilibré`}
           </div>
         </Card>
 
@@ -71,6 +74,13 @@ export const StepParams = ({ params, setParams, onNext }) => {
           <Field label="Charges variables" value={params.chargesVariablesPct} onChange={v => set('chargesVariablesPct', v)} suffix="% du CA" min={0} max={100} step="0.1" />
           <Field label="Charges fixes (hors amort.)" value={params.chargesFixesHorsAmort} onChange={v => set('chargesFixesHorsAmort', v)} suffix="DA" min={0} />
           <Field label="Taux d'imposition (IS)" value={params.tauxIS} onChange={v => set('tauxIS', v)} suffix="%" min={0} max={100} step="0.1" />
+          <Field 
+            label="Besoin en Fonds de Roulement initial" 
+            value={params.bfrInitial || 0} 
+            onChange={v => set('bfrInitial', v)} 
+            suffix="DA" 
+            min={0} 
+          />
         </Card>
       </div>
 

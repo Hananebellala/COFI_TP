@@ -7,6 +7,7 @@ export const StepDecision = ({ params, res, onPrev, onReset }) => {
   const plan = res.planWithCumul;
   const cumulFinal = plan[plan.length - 1]?.cumulatif || 0;
   const viable = res.viable;
+  const hasCumulNeg = res.cumulNeg > 0;
 
   const verdictRecs = viable ? [
     { icon: <Target size={24} color={c.gold}/>, title: 'Maintenir le CA cible', text: `Le CA de ${DA(params.chiffreAffaires)} DA doit être atteint dès l'an 1 pour garantir la CAF projetée.` },
@@ -43,6 +44,8 @@ export const StepDecision = ({ params, res, onPrev, onReset }) => {
           <p style={{ fontSize: '1rem', opacity: 0.95, lineHeight: 1.6, maxWidth: 600 }}>
             {viable
               ? `Le plan de financement de ${params.nomSociete} est équilibré. La CAF de ${DA(res.caf)} DA couvre entièrement les annuités et permet de dégager une trésorerie cumulée positive de ${DA(cumulFinal)} DA sur ${params.duree} ans.`
+              : hasCumulNeg
+              ? `Le plan présente un sous-financement. Bien que le projet dégage des surplus annuels, la trésorerie cumulative passe en négatif ${res.cumulNeg} année(s). Cela signifie un besoin d'injection de capital ou d'accès au crédit court terme.`
               : `Le plan présente ${res.soldeNeg} année(s) en déficit. La CAF de ${DA(res.caf)} DA est trop faible face au poids des remboursements. Le projet nécessitera une injection de liquidités.`
             }
           </p>
@@ -53,7 +56,7 @@ export const StepDecision = ({ params, res, onPrev, onReset }) => {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem', marginBottom: '2.5rem' }}>
         <Metric label="CAF annuelle" value={`${DA(res.caf)} DA`} color={res.caf > 0 ? c.green : c.red} sub="Source de valeur" />
         <Metric label="Trésorerie finale" value={`${cumulFinal >= 0 ? '+' : ''}${DA(cumulFinal)} DA`} color={cumulFinal >= 0 ? c.green : c.red} sub="Solde cumulé (5 ans)" />
-        <Metric label="Équilibre" value={viable ? 'Validé' : 'Déséquilibré'} sub={viable ? 'Toutes années positives' : `${res.soldeNeg} année(s) dans le rouge`} color={viable ? c.green : c.red} />
+        <Metric label="Équilibre" value={viable ? 'Validé' : 'Déséquilibré'} sub={viable ? 'Toutes années positives' : hasCumulNeg ? `${res.cumulNeg} année(s) sous-financée` : `${res.soldeNeg} année(s) dans le rouge`} color={viable ? c.green : c.red} />
         <Metric label="Charge Intérêts" value={`${DA(res.totalInt)} DA`} color={c.ink} sub="Coût du crédit" />
       </div>
 

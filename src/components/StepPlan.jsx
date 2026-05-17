@@ -59,6 +59,7 @@ export const StepPlan = ({ params, res, onPrev, onNext }) => {
             </tr>
             {[
               { label: 'Investissement', key: 'investissement' },
+              { label: 'Besoin en Fonds de Roulement', key: 'bfr' },
               { label: 'Remboursement emprunt (annuité)', key: 'annuite' },
             ].map(item => (
               <tr key={item.key}>

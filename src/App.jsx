@@ -26,6 +26,8 @@ const defaultParams = {
   chargesVariablesPct: 55,
   chargesFixesHorsAmort: 3600000,
   tauxIS: 26,
+  // BFR
+  bfrInitial: 0,
 };
 
 function App() {
