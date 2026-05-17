@@ -89,27 +89,48 @@ export const Tag = ({ children, color = 'green' }) => {
 
 export const Divider = () => <div style={{ borderTop: `1px solid ${c.sandDark}`, margin: '1.5rem 0' }} />;
 
+/* ─── RESPONSIVE HELPER COMPONENTS ─────────────────────── */
+export const ResponsiveContainer = ({ children, maxWidth = 900 }) => (
+  <div style={{
+    maxWidth,
+    margin: '0 auto',
+    padding: 'clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem)',
+  }}>
+    {children}
+  </div>
+);
+
+export const ResponsiveGrid = ({ children, cols = 2 }) => (
+  <div style={{
+    display: 'grid',
+    gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, max(280px, calc((100% - 1.5rem) / ${cols}))), 1fr))`,
+    gap: '1.5rem',
+  }}>
+    {children}
+  </div>
+);
+
 /* ─── NAV ───────────────────────────────────────────── */
 const STEPS = ['Paramètres', 'Résultats CAF', 'Tableau Emprunt', 'Plan Financement', 'Décision'];
 
 export const Nav = ({ step, setStep, canProceed }) => (
-  <nav style={{ background: c.ink, padding: '0 2rem', display: 'flex', alignItems: 'stretch', position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 4px 20px rgba(0,0,0,0.15)' }}>
-    <div style={{ color: '#fff', fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: '1.2rem', padding: '0 1.5rem 0 0', marginRight: '1rem', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+  <nav style={{ background: c.ink, padding: '0 clamp(1rem, 4vw, 2rem)', display: 'flex', alignItems: 'stretch', position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 4px 20px rgba(0,0,0,0.15)' }}>
+    <div style={{ color: '#fff', fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)', padding: '0 clamp(0.5rem, 2vw, 1.5rem) 0 0', marginRight: 'clamp(0.5rem, 2vw, 1rem)', borderRight: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
       <div style={{width: 24, height: 24, borderRadius: 6, background: 'linear-gradient(135deg, var(--gold), var(--gold-dark))'}}></div>
-      <span style={{ color: c.white }}>CO<span style={{color: c.gold}}>FI</span></span>
+      <span style={{ color: c.white, display: 'block' }}>CO<span style={{color: c.gold}}>FI</span></span>
     </div>
-    <div style={{ display: 'flex', gap: 0, overflowX: 'auto', flex: 1 }}>
+    <div style={{ display: 'flex', gap: 0, overflowX: 'auto', flex: 1, scrollBehavior: 'smooth' }}>
       {STEPS.map((s, i) => (
         <button key={i} onClick={() => (i <= canProceed) && setStep(i)} style={{
-          padding: '0 1.25rem', height: 60, border: 'none', background: 'transparent',
+          padding: 'clamp(0.5rem, 2vw, 1.25rem)', height: 60, border: 'none', background: 'transparent',
           color: step === i ? '#fff' : 'rgba(255,255,255,0.5)',
           borderBottom: step === i ? `3px solid ${c.gold}` : '3px solid transparent',
-          fontWeight: step === i ? 600 : 500, fontSize: '0.85rem', whiteSpace: 'nowrap',
+          fontWeight: step === i ? 600 : 500, fontSize: 'clamp(0.7rem, 2vw, 0.85rem)', whiteSpace: 'nowrap',
           cursor: i <= canProceed ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
           display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s'
         }}>
           <span style={{ width: 22, height: 22, borderRadius: '50%', background: step === i ? c.gold : 'rgba(255,255,255,0.1)', color: step === i ? c.ink : '#fff', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, flexShrink: 0 }}>{i + 1}</span>
-          {s}
+          <span style={{ display: 'none', '@media (min-width: 640px)': { display: 'block' } }}>{s}</span>
         </button>
       ))}
     </div>

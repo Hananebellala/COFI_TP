@@ -14,24 +14,24 @@ export const StepPlan = ({ params, res, onPrev, onNext }) => {
   });
 
   return (
-    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '3rem 1.5rem' }} className="fade-up delay-100">
-      <h2 style={{ fontSize: '2rem', color: c.ink, marginBottom: '0.5rem' }}>Plan de Financement</h2>
-      <p style={{ fontSize: '0.95rem', color: c.inkMuted, marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <div style={{ maxWidth: 1100, margin: '0 auto', padding: 'clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem)' }} className="fade-up delay-100">
+      <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', color: c.ink, marginBottom: '0.5rem' }}>Plan de Financement</h2>
+      <p style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', color: c.inkMuted, marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
         Horizon {params.duree} ans · Régle d'or: <strong style={{ color: c.green }}>Ressources ≥ Besoins</strong>
       </p>
 
       <Card style={{ marginBottom: '2rem', overflowX: 'auto', padding: '0', borderRadius: 16 }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'clamp(0.75rem, 2vw, 0.9rem)', minWidth: 'max-content' }}>
           <thead>
             <tr style={{ background: c.ink, color: '#fff' }}>
-              <th style={{ padding: '1rem 1.5rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', letterSpacing: '0.05em', minWidth: 240 }}>Éléments</th>
-              {plan.map(r => <th key={r.yr} style={{ padding: '1rem 1.25rem', textAlign: 'right', fontWeight: 600, fontSize: '0.85rem', letterSpacing: '0.05em', minWidth: 140 }}>Année {r.yr}</th>)}
+              <th style={{ padding: 'clamp(0.6rem, 2vw, 1rem) clamp(0.75rem, 3vw, 1.5rem)', textAlign: 'left', fontWeight: 600, fontSize: 'clamp(0.7rem, 1.5vw, 0.85rem)', letterSpacing: '0.05em', minWidth: 'clamp(150px, 30vw, 240px)' }}>Éléments</th>
+              {plan.map(r => <th key={r.yr} style={{ padding: 'clamp(0.6rem, 2vw, 1rem) clamp(0.5rem, 2vw, 1.25rem)', textAlign: 'right', fontWeight: 600, fontSize: 'clamp(0.7rem, 1.5vw, 0.85rem)', letterSpacing: '0.05em', minWidth: 'clamp(100px, 20vw, 140px)' }}>Année {r.yr}</th>)}
             </tr>
           </thead>
           <tbody>
             {/* RESSOURCES */}
             <tr style={{ background: c.greenLight }}>
-              <td colSpan={plan.length + 1} style={{ padding: '0.75rem 1.5rem', fontSize: '0.8rem', fontWeight: 700, color: c.greenMid, textTransform: 'uppercase', letterSpacing: '0.1em' }}>▲ RESSOURCES</td>
+              <td colSpan={plan.length + 1} style={{ padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)', fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)', fontWeight: 700, color: c.greenMid, textTransform: 'uppercase', letterSpacing: '0.1em' }}>▲ RESSOURCES</td>
             </tr>
             {[
               { label: 'CAF annuelle', key: 'caf', color: c.greenMid },
@@ -102,17 +102,17 @@ export const StepPlan = ({ params, res, onPrev, onNext }) => {
 
       {/* Bar chart */}
       <Card style={{ marginBottom: '2.5rem' }}>
-        <div style={{ fontSize: '0.95rem', fontWeight: 600, color: c.ink, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', fontWeight: 600, color: c.ink, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
           <BarChart3 size={18} color={c.green} /> Solde annuel - Visualisation
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {plan.map(r => (
-            <div key={r.yr} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <span style={{ fontSize: '0.85rem', color: c.inkSoft, width: 70, textAlign: 'right', flexShrink: 0, fontWeight: 500 }}>Année {r.yr}</span>
-              <div style={{ flex: 1, height: 24, background: c.sandDark, borderRadius: 6, overflow: 'hidden' }}>
+            <div key={r.yr} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.75rem, 3vw, 16px)', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 'clamp(0.75rem, 2vw, 0.85rem)', color: c.inkSoft, minWidth: 'clamp(60px, 15vw, 70px)', textAlign: 'right', flexShrink: 0, fontWeight: 500 }}>Année {r.yr}</span>
+              <div style={{ flex: 1, minWidth: '120px', height: 24, background: c.sandDark, borderRadius: 6, overflow: 'hidden' }}>
                 <div style={{ height: '100%', width: `${Math.abs(r.solde) / maxSolde * 100}%`, background: r.solde >= 0 ? c.greenMid : c.red, borderRadius: 6, transition: 'width 1s cubic-bezier(0.16, 1, 0.3, 1)' }} />
               </div>
-              <span style={{ fontSize: '0.9rem', minWidth: 160, fontVariantNumeric: 'tabular-nums', color: r.solde >= 0 ? c.green : c.red, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', minWidth: 'clamp(120px, 30vw, 160px)', fontVariantNumeric: 'tabular-nums', color: r.solde >= 0 ? c.green : c.red, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
                 {r.solde >= 0 ? '+' : ''}{DA(r.solde)} DA
               </span>
             </div>
@@ -120,9 +120,9 @@ export const StepPlan = ({ params, res, onPrev, onNext }) => {
         </div>
       </Card>
 
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <Btn variant="outline" onClick={onPrev}><ArrowLeft size={16}/> Retour</Btn>
-        <Btn onClick={onNext}>Voir la Décision <ArrowRight size={16}/></Btn>
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        <Btn variant="outline" onClick={onPrev} style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', padding: 'clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)' }}><ArrowLeft size={16}/> Retour</Btn>
+        <Btn onClick={onNext} style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', padding: 'clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)' }}>Voir la Décision <ArrowRight size={16}/></Btn>
       </div>
     </div>
   );

@@ -22,26 +22,26 @@ export const StepDecision = ({ params, res, onPrev, onReset }) => {
   ];
 
   return (
-    <div style={{ maxWidth: 1000, margin: '0 auto', padding: '3rem 1.5rem' }} className="fade-up delay-100">
+    <div style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem)' }} className="fade-up delay-100">
       {/* VERDICT CARD */}
       <div style={{
         background: viable ? `linear-gradient(135deg, ${c.green}, ${c.greenMid})` : `linear-gradient(135deg, ${c.red}, #7B1212)`,
-        borderRadius: 24, padding: '3.5rem 3rem', color: '#fff', marginBottom: '2.5rem',
-        display: 'flex', gap: '2rem', alignItems: 'center', position: 'relative', overflow: 'hidden',
+        borderRadius: 24, padding: 'clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem)', color: '#fff', marginBottom: '2.5rem',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(1rem, 3vw, 2rem)', alignItems: 'center', position: 'relative', overflow: 'hidden',
         boxShadow: viable ? '0 20px 40px -10px rgba(15,76,58,0.4)' : '0 20px 40px -10px rgba(153,27,27,0.4)'
       }}>
-        <div style={{ position: 'absolute', right: -20, top: '50%', transform: 'translateY(-50%)', opacity: 0.1 }}>
+        <div style={{ position: 'absolute', right: -20, top: '50%', transform: 'translateY(-50%)', opacity: 0.1, display: 'none', '@media (min-width: 768px)': { display: 'block' } }}>
           {viable ? <CheckCircle size={300} /> : <XCircle size={300} />}
         </div>
         <div style={{ flexShrink: 0, background: 'rgba(255,255,255,0.15)', borderRadius: '50%', padding: '1rem', backdropFilter: 'blur(10px)' }}>
           {viable ? <CheckCircle size={64} color="#fff" strokeWidth={1.5} /> : <XCircle size={64} color="#fff" strokeWidth={1.5} />}
         </div>
-        <div>
-          <div style={{ fontSize: '0.85rem', letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.8, marginBottom: '0.75rem', fontWeight: 600 }}>Verdict du modèle</div>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', lineHeight: 1.1 }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 'clamp(0.7rem, 2vw, 0.85rem)', letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.8, marginBottom: '0.75rem', fontWeight: 600 }}>Verdict du modèle</div>
+          <h2 style={{ fontSize: 'clamp(1.75rem, 6vw, 2.5rem)', marginBottom: '1rem', lineHeight: 1.1 }}>
             {viable ? 'Projet VIABLE' : 'Projet À RISQUE'}
           </h2>
-          <p style={{ fontSize: '1rem', opacity: 0.95, lineHeight: 1.6, maxWidth: 600 }}>
+          <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', opacity: 0.95, lineHeight: 1.6, maxWidth: 600, margin: '0 auto' }}>
             {viable
               ? `Le plan de financement de ${params.nomSociete} est équilibré. La CAF de ${DA(res.caf)} DA couvre entièrement les annuités et permet de dégager une trésorerie cumulée positive de ${DA(cumulFinal)} DA sur ${params.duree} ans.`
               : hasCumulNeg
@@ -53,14 +53,14 @@ export const StepDecision = ({ params, res, onPrev, onReset }) => {
       </div>
 
       {/* KPIs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem', marginBottom: '2.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, max(200px, calc((100% - 3.75rem) / 4))), 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
         <Metric label="CAF annuelle" value={`${DA(res.caf)} DA`} color={res.caf > 0 ? c.green : c.red} sub="Source de valeur" />
         <Metric label="Trésorerie finale" value={`${cumulFinal >= 0 ? '+' : ''}${DA(cumulFinal)} DA`} color={cumulFinal >= 0 ? c.green : c.red} sub="Solde cumulé (5 ans)" />
         <Metric label="Équilibre" value={viable ? 'Validé' : 'Déséquilibré'} sub={viable ? 'Toutes années positives' : hasCumulNeg ? `${res.cumulNeg} année(s) sous-financée` : `${res.soldeNeg} année(s) dans le rouge`} color={viable ? c.green : c.red} />
         <Metric label="Charge Intérêts" value={`${DA(res.totalInt)} DA`} color={c.ink} sub="Coût du crédit" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '3rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, max(300px, calc((100% - 2rem) / 2))), 1fr))', gap: '2rem', marginBottom: '3rem' }}>
         {/* Synthèse */}
         <Card highlight={c.sandDark}>
           <div style={{ fontSize: '1rem', fontWeight: 600, color: c.ink, marginBottom: '1.5rem' }}>Synthèse par année</div>
@@ -102,8 +102,8 @@ export const StepDecision = ({ params, res, onPrev, onReset }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Btn variant="outline" onClick={onPrev}><ArrowLeft size={16}/> Revoir le plan</Btn>
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <Btn variant="outline" onClick={() => window.print()}><Printer size={16}/> Imprimer le rapport</Btn>
-          <Btn variant="gold" onClick={onReset}><RefreshCw size={16}/> Nouveau calcul</Btn>
+          <Btn variant="outline" onClick={() => window.print()} style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', padding: 'clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)' }}><Printer size={16}/> Imprimer le rapport</Btn>
+          <Btn variant="gold" onClick={onReset} style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', padding: 'clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)' }}><RefreshCw size={16}/> Nouveau calcul</Btn>
         </div>
       </div>
     </div>

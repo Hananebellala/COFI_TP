@@ -90,3 +90,43 @@ button {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
+
+/* ─── RESPONSIVE DESIGN ───────────────────────────────────── */
+
+/* Tablets and smaller desktops */
+@media (max-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+  
+  input, select {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+  
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+  
+  input, select {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 { font-size: 1.5rem !important; }
+  h2 { font-size: 1.25rem !important; }
+  h3 { font-size: 1.1rem !important; }
+}
+

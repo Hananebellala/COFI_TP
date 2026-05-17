@@ -21,19 +21,19 @@ export const StepCAF = ({ params, res, onPrev, onNext }) => {
   ];
 
   return (
-    <div style={{ maxWidth: 960, margin: '0 auto', padding: '3rem 1.5rem' }} className="fade-up delay-100">
-      <h2 style={{ fontSize: '2rem', color: c.ink, marginBottom: '0.5rem' }}>Capacité d'Autofinancement</h2>
-      <p style={{ fontSize: '0.95rem', color: c.inkMuted, marginBottom: '2.5rem' }}>CAF = Résultat net + Dotations aux amortissements (charges non décaissées)</p>
+    <div style={{ maxWidth: 960, margin: '0 auto', padding: 'clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem)' }} className="fade-up delay-100">
+      <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', color: c.ink, marginBottom: '0.5rem' }}>Capacité d'Autofinancement</h2>
+      <p style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', color: c.inkMuted, marginBottom: '2.5rem' }}>CAF = Résultat net + Dotations aux amortissements (charges non décaissées)</p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '5fr 3fr', gap: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, max(280px, calc((100% - 2rem) / 2))), 1fr))', gap: '2rem' }}>
         <Card>
-          <div style={{ fontSize: '0.95rem', fontWeight: 600, color: c.green, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', fontWeight: 600, color: c.green, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
             <Calculator size={18} /> Compte de résultat simplifié
           </div>
           {rows.map((r, i) => (
-            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.65rem 1rem', background: r.big ? c.greenLight : i % 2 === 0 ? c.sand : 'transparent', borderRadius: 8, marginBottom: 4, border: r.big ? `1.5px solid ${c.greenMid}` : 'none' }}>
-              <span style={{ fontSize: r.big ? '0.95rem' : '0.85rem', fontWeight: r.bold ? 600 : 400, color: r.color || c.inkSoft }}>{r.label}</span>
-              <span style={{ fontSize: r.big ? '1.1rem' : '0.9rem', fontWeight: r.bold ? 700 : 500, color: r.color || c.ink, fontVariantNumeric: 'tabular-nums' }}>
+            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'clamp(0.5rem, 2vw, 0.65rem) clamp(0.75rem, 3vw, 1rem)', background: r.big ? c.greenLight : i % 2 === 0 ? c.sand : 'transparent', borderRadius: 8, marginBottom: 4, border: r.big ? `1.5px solid ${c.greenMid}` : 'none', gap: '1rem' }}>
+              <span style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', fontWeight: r.bold ? 600 : 400, color: r.color || c.inkSoft }}>{r.label}</span>
+              <span style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: r.bold ? 700 : 500, color: r.color || c.ink, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
                 {DA(Math.abs(r.val))} DA
               </span>
             </div>
@@ -55,9 +55,9 @@ export const StepCAF = ({ params, res, onPrev, onNext }) => {
         </div>
       </div>
 
-      <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem' }}>
-        <Btn variant="outline" onClick={onPrev}><ArrowLeft size={16}/> Retour</Btn>
-        <Btn onClick={onNext}>Tableau Emprunt <ArrowRight size={16}/></Btn>
+      <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        <Btn variant="outline" onClick={onPrev} style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', padding: 'clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)' }}><ArrowLeft size={16}/> Retour</Btn>
+        <Btn onClick={onNext} style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', padding: 'clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)' }}>Tableau Emprunt <ArrowRight size={16}/></Btn>
       </div>
     </div>
   );

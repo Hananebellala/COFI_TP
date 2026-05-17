@@ -10,31 +10,31 @@ export const StepParams = ({ params, setParams, onNext }) => {
   const ok = Math.abs(totalFinancement - totalBesoins) < 1;
 
   return (
-    <div style={{ maxWidth: 900, margin: '0 auto', padding: '3rem 1.5rem' }} className="fade-up delay-100">
+    <div style={{ maxWidth: 900, margin: '0 auto', padding: 'clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem)' }} className="fade-up delay-100">
       {/* Hero */}
-      <div style={{ background: c.ink, borderRadius: 20, padding: '3rem', color: '#fff', marginBottom: '2rem', position: 'relative', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
-        <div style={{ position: 'absolute', right: -40, bottom: -40, opacity: 0.05, transform: 'scale(2.5)' }}>
+      <div style={{ background: c.ink, borderRadius: 20, padding: 'clamp(1.5rem, 5vw, 3rem)', color: '#fff', marginBottom: '2rem', position: 'relative', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
+        <div style={{ position: 'absolute', right: -40, bottom: -40, opacity: 0.05, transform: 'scale(2.5)', display: 'none', '@media (min-width: 768px)': { display: 'block' } }}>
           <LineChart size={200} />
         </div>
-        <div style={{ fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: c.gold, marginBottom: '0.75rem', fontWeight: 600 }}>TP COFI · Thème II.2</div>
-        <h1 style={{ fontSize: '2.4rem', marginBottom: '1rem', lineHeight: 1.1 }}>Plan de <span style={{ color: c.gold }}>Financement</span></h1>
-        <p style={{ fontSize: '0.95rem', color: c.inkMuted, maxWidth: 540, lineHeight: 1.6 }}>Saisissez les paramètres du projet pour générer automatiquement le compte de résultat, le tableau d'emprunt et la décision de viabilité finale.</p>
+        <div style={{ fontSize: 'clamp(0.7rem, 2vw, 0.8rem)', letterSpacing: '0.15em', textTransform: 'uppercase', color: c.gold, marginBottom: '0.75rem', fontWeight: 600 }}>TP COFI · Thème II.2</div>
+        <h1 style={{ fontSize: 'clamp(1.75rem, 6vw, 2.4rem)', marginBottom: '1rem', lineHeight: 1.1 }}>Plan de <span style={{ color: c.gold }}>Financement</span></h1>
+        <p style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', color: c.inkMuted, maxWidth: 540, lineHeight: 1.6 }}>Saisissez les paramètres du projet pour générer automatiquement le compte de résultat, le tableau d'emprunt et la décision de viabilité finale.</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, max(300px, calc((100% - 1.5rem) / 2))), 1fr))', gap: '1.5rem' }}>
         {/* Identité */}
         <Card style={{ gridColumn: '1/-1' }}>
-          <div style={{ fontSize: '0.95rem', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Building2 size={18} /> Identité de la société
           </div>
-          <div style={{ maxWidth: '50%' }}>
+          <div style={{ maxWidth: '100%' }}>
             <Field label="Nom de la société" type="text" value={params.nomSociete} onChange={v => set('nomSociete', v)} />
           </div>
         </Card>
 
         {/* Investissement */}
         <Card>
-          <div style={{ fontSize: '0.95rem', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Settings2 size={18} /> Projet d'investissement
           </div>
           <Field label="Montant de l'investissement" value={params.montantInvest} onChange={v => set('montantInvest', v)} suffix="DA" min={0} />
@@ -43,13 +43,13 @@ export const StepParams = ({ params, setParams, onNext }) => {
 
         {/* Financement de l'invest */}
         <Card highlight={ok ? c.greenMid : c.red}>
-          <div style={{ fontSize: '0.95rem', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Wallet size={18} /> Sources de financement
           </div>
           <Field label="Apport en capital" value={params.apportCapital} onChange={v => set('apportCapital', v)} suffix="DA" min={0} />
           <Field label="Autofinancement" value={params.autoFinancement} onChange={v => set('autoFinancement', v)} suffix="DA" min={0} />
           <Field label="Emprunt bancaire" value={params.montantEmprunt} onChange={v => set('montantEmprunt', v)} suffix="DA" min={0} />
-          <div style={{ background: ok ? c.greenLight : c.redLight, border: `1px solid ${ok ? c.green : c.red}`, borderRadius: 10, padding: '0.75rem 1rem', fontSize: '0.85rem', color: ok ? c.green : c.red, marginTop: '1rem', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ background: ok ? c.greenLight : c.redLight, border: `1px solid ${ok ? c.green : c.red}`, borderRadius: 10, padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem)', fontSize: 'clamp(0.75rem, 2vw, 0.85rem)', color: ok ? c.green : c.red, marginTop: '1rem', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem', wordBreak: 'break-word' }}>
             {ok 
               ? `Total = ${DA(totalFinancement)} DA — équilibré` 
               : `Total = ${DA(totalFinancement)} DA ≠ Besoins ${DA(totalBesoins)} DA (Invest: ${DA(params.montantInvest)} + BFR: ${DA(params.bfrInitial || 0)}) — déséquilibré`}
@@ -58,7 +58,7 @@ export const StepParams = ({ params, setParams, onNext }) => {
 
         {/* Emprunt */}
         <Card>
-          <div style={{ fontSize: '0.95rem', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Banknote size={18} /> Conditions de l'emprunt
           </div>
           <Field label="Taux d'intérêt" value={params.tauxEmprunt} onChange={v => set('tauxEmprunt', v)} suffix="%" min={0} step="0.1" />
@@ -67,7 +67,7 @@ export const StepParams = ({ params, setParams, onNext }) => {
 
         {/* Exploitation */}
         <Card>
-          <div style={{ fontSize: '0.95rem', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', fontWeight: 600, color: c.green, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <LineChart size={18} /> Données d'exploitation
           </div>
           <Field label="Chiffre d'affaires annuel" value={params.chiffreAffaires} onChange={v => set('chiffreAffaires', v)} suffix="DA" min={0} />
@@ -84,8 +84,8 @@ export const StepParams = ({ params, setParams, onNext }) => {
         </Card>
       </div>
 
-      <div style={{ marginTop: '2.5rem', display: 'flex', justifyContent: 'flex-end' }}>
-        <Btn onClick={onNext} variant="green" style={{ padding: '0.85rem 2.5rem', fontSize: '1rem' }}>
+      <div style={{ marginTop: '2.5rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem', flexWrap: 'wrap' }}>
+        <Btn onClick={onNext} variant="green" style={{ padding: 'clamp(0.65rem, 2vw, 0.85rem) clamp(1.5rem, 4vw, 2.5rem)', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
           Calculer <ArrowRight size={18} />
         </Btn>
       </div>
